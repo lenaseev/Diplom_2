@@ -2,13 +2,13 @@ import requests
 import random
 import string
 from urls import Urls
-
+import allure
 
 def generate_random_string(length):
     letters = string.ascii_lowercase
     return ''.join(random.choice(letters) for _ in range(length))
 
-
+@allure.step("Регистрация нового пользователя")
 def register_new_user_and_return_login_password():
     urls = Urls()
     email = f"test_{generate_random_string(8)}@yandex.ru"
@@ -35,7 +35,7 @@ def register_new_user_and_return_login_password():
         "response_data": response.json() if response.content else None
     }
 
-
+@allure.step("Удаление пользователя")
 def delete_user(email, password):
     urls = Urls()
 

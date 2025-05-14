@@ -1,13 +1,13 @@
 import pytest
 import requests
 from urls import Urls
-from helpers import register_new_user_and_return_login_password  # Если используете helpers.py
+from helpers import register_new_user_and_return_login_password, delete_user
 
 @pytest.fixture
 def create_user():
-    user_data = register_new_user_and_return_login_password()  # Используем функцию из helpers.py
-    assert user_data["status_code"] == 200, f"Ошибка при регистрации пользователя: {user_data['status_code']}"
-    return user_data
+    user_data = register_new_user_and_return_login_password()
+    yield user_data
+    delete_user(user_data["email"], user_data["password"])
 
 
 @pytest.fixture
