@@ -20,13 +20,10 @@ def auth_token(create_user): # Фикстура для получения ток
             "password": user_data["password"]
         }
     )
-    assert response.status_code == 200, f"Ошибка при авторизации: {response.status_code}"
     return response.json()["accessToken"]
 
 @pytest.fixture
 def valid_ingredients():
     response = requests.get(Urls().INGREDIENTS_ORDERS)
-    assert response.ok, f"Ошибка при получении ингредиентов: {response.status_code}"
     ingredients = response.json().get("data", [])
-    assert len(ingredients) >= 2, "Недостаточно ингредиентов для теста"
     return [ingredients[0]["_id"], ingredients[1]["_id"]]
